@@ -166,7 +166,6 @@ function init(data){
 function step(clusters){
 	console.log("step");
 	var n_clusters = clusters.length;
-	var new_clusters = [];
 	//find minimum
 	var min = Number.MAX_SAFE_INTEGER;
 	var a,b;
@@ -182,11 +181,7 @@ function step(clusters){
 			}
 		}	
 	}
-	for (var i = 0 ; i < n_clusters ; i++){
-		if (i != a && i != b){
-			new_clusters.push(clusters[i]);
-		}
-	}
+	var new_clusters = clusters.filter(function(x,i){ i!=a && i!=b;});
 	//merge two closest clusters A and B
 	var clusterA = clusters[a];
 	var clusterB = clusters[b];
