@@ -26,6 +26,7 @@ var _dot = function(a,b){
 var data;
 var dist;
 var metric;
+var results;
 
 //distance between 2 vectors - a and b must be vectors of the same length
 var _euclidean = function(a,b){
@@ -165,6 +166,7 @@ function init(data){
 //metric must me one of the four defined above
 function step(clusters){
 	console.log("step");
+	console.log(clusters.length)
 	var n_clusters = clusters.length;
 	//find minimum
 	var min = Number.MAX_SAFE_INTEGER;
@@ -181,7 +183,7 @@ function step(clusters){
 			}
 		}	
 	}
-	var new_clusters = clusters.filter(function(x,i){ i!=a && i!=b;});
+	var new_clusters = clusters.filter(function(x,i){ return i!=a && i!=b;});
 	//merge two closest clusters A and B
 	var clusterA = clusters[a];
 	var clusterB = clusters[b];
@@ -197,17 +199,14 @@ function cluster(data,n){
 	while (n_clusters > n){
 		clusters = step(clusters);
 		n_clusters -= 1;
-		console.log(n_clusters);
 	}
-	if(clusters.length != n){
-		console.error("lol something went wrong");
-	}
+	if(clusters.length != n){console.error("something went wrong");}
 	return clusters;
 }
 
-function ready(data,n){
-	var clusters = cluster(data,n);
-	console.log(clusters);
+function ready(n){
+	results = cluster(data,n);
+	console.log("done");
 }
 
 d3.text("similarity.csv",function(error,csvdata){
@@ -215,8 +214,7 @@ d3.text("similarity.csv",function(error,csvdata){
     return row.map(x => Number(x));
   });
 	console.log('ready');
-	console.log(data.length);
-	console.log(data[0].length);
+	console.log(data.length, data[0].length);
 });
 
 </script>
