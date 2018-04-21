@@ -147,10 +147,10 @@ var _centroid = function(u,v){
 dist = _euclidean;
 metric = _centroid;
 
-// a cluster will be represented as a JSON object, tree structured, as defined below
+// a [cluster] will be represented as a JSON object, tree structured, as defined below
 // {
-// 	items = int list representing indices in the data matrix which each represent 1 sample
-// 	children = cluster list (of which this cluster is formed from); empty if this cluster is leaf
+// 	items : [int list] representing indices in the data matrix which each represent 1 sample
+// 	children : [cluster list] (of which this cluster is formed from); empty if this cluster is leaf
 // }
 
 //initializes a set of clusters from the data - each sample is in its own cluster
@@ -204,11 +204,24 @@ function cluster(data,n){
 	return clusters;
 }
 
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
+
+//performs agglomerative clustering on 2d array of data until you end up with [n] clusters
+//then it automatically downloads the results as "results.json"
+//inputs: n - int
 function ready(n){
 	results = cluster(data,n);
 	console.log("done");
+	download(JSON.stringify(results), 'results.json', 'text/plain');
 }
 
+//change the filename here to change the datafile you want to use
 d3.text("similarity.csv",function(error,csvdata){
   data = d3.csvParseRows(csvdata, function(row){
     return row.map(x => Number(x));
@@ -216,6 +229,12 @@ d3.text("similarity.csv",function(error,csvdata){
 	console.log('ready');
 	console.log(data.length, data[0].length);
 });
+
+//instructions to use:
+//1. set correct filename in data loading script
+//2. run local server in this directory and open in browser
+//3. wait for console printout to say "ready" and check number printout matches shape of data matrix
+//4. run ready(n) where n is the number of clusters you want to end up with - for a complete tree, use ready(1)
 
 </script>
 </body>	
