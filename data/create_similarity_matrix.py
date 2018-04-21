@@ -3,27 +3,27 @@ import json
 import numpy as np
 
 
-sim = np.zeros(shape=(409,409))
-ids = []
-
 with open('political-journalists-connections.json', 'r') as infile:
 	connections = json.load(infile)
+
+sim = np.zeros(shape=(len(connections),len(connections)))
+ids = []
+
 
 count1 = 0
 for key1 in connections:
 	ids.append(key1)
 	count2 = 0
 	for key2 in connections:
+		set1 = set(connections[key1]['followers']).union(set(connections[key1]['friends']))
+		set2 = set(connections[key2]['followers']).union(set(connections[key2]['friends']))
 
-		# set1 = set(connections[key1]['followers']).union(set(connections[key1]['friends']))
-		# set2 = set(connections[key2]['followers']).union(set(connections[key2]['friends']))
+		if min(len(set1), len(set2)) == 0:
+			score = 0
+		else:
+			score = len(set1.intersection(set2)) / min(len(set1), len(set2))
 
-		# if min(len(set1), len(set2)) == 0:
-		# 	score = 0
-		# else:
-		# 	score = len(set1.intersection(set2)) / min(len(set1), len(set2))
-
-		# sim[count1,count2] = score
+		sim[count1,count2] = score
 		count2+=1
 	count1 += 1
 
