@@ -153,20 +153,20 @@ var _centroid = function(u,v){
 	return dist(u.centroid, v.centroid)
 }
 
-var _median = function(u,v){
-	if (u.items.length = 1){
-		u.metric = data[u.items[0]];
-	}
-	if (v.items.length = 1){
-		v.metric = data[v.items[0]];
-	}
-	var median = [];
-	for (var i = 0 ; i < data[0].length ; i++){
-		median.push((u.metric[i] + v.metric[i]) / 2);
-	}
-	return median
+// var _median = function(u,v){
+// 	if (u.items.length = 1){
+// 		u.centroid = data[u.items[0]];
+// 	}
+// 	if (v.items.length = 1){
+// 		v.centroid = data[v.items[0]];
+// 	}
+// 	var median = [];
+// 	for (var i = 0 ; i < data[0].length ; i++){
+// 		median.push((u.centroid[i] + v.metric[i]) / 2);
+// 	}
+// 	return median
 
-}
+// }
 
 //set the params here
 dist = _euclidean;
