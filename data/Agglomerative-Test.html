@@ -168,6 +168,27 @@ var _centroid = function(u,v){
 
 // }
 
+// implementation of ward's algo; needs to be tested and revised
+var _ward = function(u, v) {
+	
+	if (u.items.length == 1) // u.metric is undefined
+		return 1; // is this correct
+
+	var s = u.children[0];
+	var t = u.children[1];
+
+	var sSize = s.items.length;
+	var tSize = t.items.length;
+	var vSize = v.items.length;
+	var T = sSize + tSize + vSize;
+
+	var dist_vs = (vSize + sSize) * Math.pow(_ward(v, s), 2) / T; // better way to do w/o recursion?
+	var dist_vt = (vSize + tSize) * Math.pow(_ward(v, t), 2) / T;
+	var dist_st = vSize * Math.pow(u.metric, 2) / T;
+
+	return Math.sqrt(dist_vs + dist_vt - dist_st);
+}
+
 //set the params here
 dist = _euclidean;
 metric = _centroid;
