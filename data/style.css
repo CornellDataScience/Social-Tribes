@@ -1,0 +1,22 @@
+body {
+	font-family: arial-black;
+	fill: #6e6e6e;
+}
+
+svg {
+	width: 100%;
+}
+
+button {
+	margin-left: 280px;
+	height: 30px;
+	font-family: arial-black;
+	fill: #6e6e6e;
+}
+
+.xAxisLabel,
+.yAxisLabel {
+	font-size: 0.9em;
+	text-anchor: end;
+	
+}

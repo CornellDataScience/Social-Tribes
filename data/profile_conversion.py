@@ -17,3 +17,5 @@ def get_follower_count(indexes):
 def get_all_names():
 	return [pjs[i]['name'] for i in ids]
 
+def get_all_followers():
+	return [pjs[i]['followers_count'] for i in ids]
