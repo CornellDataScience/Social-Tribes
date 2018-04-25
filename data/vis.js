@@ -53,6 +53,26 @@ d3.csv('pca.csv', function (data){
 			return color(cluster_algos[algo]);
 		});
 
+	// hovering elements
+	var div = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+    //"listen" for when the mouse is hovering over a circle
+    circle.on('mousemove', function (d) { //Optional add-on: have labels come up when hovering
+            div.transition().duration(1000)
+                .style('left', d3.event.pageX - 20 + "px")
+                .style('top', function (d) {
+                    return d3.event.pageY > height ? d3.event.pageY - 30 + 'px' : d3.event.pageY + 20 + 'px';
+                })
+                .style('opacity', '0.9')
+                .style('display', 'inline-block')
+            div.html('(' + (d.Names) + " , " + (d.Followers) + ")");
+        })
+        .on("mouseout", function (d) {
+            div.transition().duration(1000)
+                .style('opacity', '0');
+        });
+
 	// var xAxis = d3.axisBottom(x);
 	// canvas.append('g')
 	// 	.attr('transform', `translate(0, ${height})`)
