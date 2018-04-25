@@ -7,13 +7,6 @@ var margin = {
 	width = 600 - margin.left - margin.right,
 	height = 500 - margin.top - margin.bottom;
 
-var algo = 0;
-
-function algo_change(x){
-	document.getElementByID('algo');
-	algo = x;
-}
-
 var canvas = d3.select("body").select("svg")
 	.attr("width", width + margin.left + margin.right)
 	.attr('height', height + margin.top + margin.bottom)
@@ -21,6 +14,9 @@ var canvas = d3.select("body").select("svg")
 	.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 d3.csv('pca.csv', function (data){
+	var algo = 3;
+	var algos = ['Gaussian', 'Spectral', 'Agglomerative', 'KMeans'];
+
 	var sl = data.map(function (i) {
 		return i.Comp1;
 	});
@@ -122,7 +118,7 @@ d3.csv('pca.csv', function (data){
 		})
 		.attr('stroke', 'grey')
 		.attr('stroke-width', '1px')
-		.attr('opacity', 0.7);
+		.attr('opacity', 0.5);
 
 	centroids = new Array(3);
 	for (var i = 0; i < centroids.length; i++) {
@@ -221,5 +217,26 @@ d3.csv('pca.csv', function (data){
 
 	}
 
-	d3.select('#cluster').on('click', cluster);
+	function algo_change(x){
+		console.log(algos[x]);
+		document.getElementById('algo').innerHTML = algos[algo];
+		algo = x;
+
+		circle.transition().duration(1000)
+		.attr('fill', function (d) {
+			var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
+			return color(cluster_algos[algo]);
+		});
+	}
+
+	function gaussian(){algo_change(0)}
+	function spectral(){algo_change(1)}
+	function agglomerative(){algo_change(2)}
+	function kmeans(){algo_change(3);cluster()}
+
+
+	d3.select('#gaussian').on('click', gaussian);
+	d3.select('#spectral').on('click', spectral);
+	d3.select('#agglomerative').on('click', agglomerative);
+	d3.select('#kmeans').on('click', kmeans);
 });
