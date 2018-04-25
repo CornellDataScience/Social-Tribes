@@ -14,8 +14,8 @@ var canvas = d3.select("body").select("svg")
 	.attr('transform', `translate(${margin.left}, ${margin.top})`);
 
 d3.csv('pca.csv', function (data){
-	var algo = 3;
-	var algos = ['Gaussian', 'Spectral', 'Agglomerative', 'KMeans'];
+	var algo = 1;
+	var algos = ['GAUSSIAN', 'SPECTRAL', 'AGGLOMERATIVE', 'K-MEANS'];
 
 	var sl = data.map(function (i) {
 		return i.Comp1;
@@ -91,57 +91,6 @@ d3.csv('pca.csv', function (data){
 
 	// K means
 
-	var lines, circles, centroids;
-	var points = [];
-
-	for (var i = 0; i < sl.length; i++) {
-		points.push({
-			cluster: -1,
-			x: sl[i],
-			y: sw[i]
-		});
-	};
-
-	lines = canvas.selectAll('line').data(points)
-		.enter().append('line')
-		.attr('x1', function (d) {
-			return x(d.x);
-		})
-		.attr('y1', function (d) {
-			return y(d.y);
-		})
-		.attr('x2', function (d) {
-			return x(d.x);
-		})
-		.attr('y2', function (d) {
-			return y(d.y);
-		})
-		.attr('stroke', 'grey')
-		.attr('stroke-width', '1px')
-		.attr('opacity', 0.5);
-
-	centroids = new Array(3);
-	for (var i = 0; i < centroids.length; i++) {
-		var centroid_seed = Math.round(Math.random() * points.length);
-		console.log(points[centroid_seed]);
-		centroids[i] = {
-			x: points[centroid_seed].x,
-			y: points[centroid_seed].y
-		}
-	}
-
-	var centroidCircles = canvas.selectAll('.centroid').data(centroids)
-		.enter().append('circle')
-		.attr('class', 'centroid')
-		.attr('r', 5)
-		.attr('fill', '#333333')
-		.attr('cx', function (d) {
-			return x(d.x);
-		})
-		.attr('cy', function (d) {
-			return y(d.y);
-		});
-
 	function nearest(point, candidates) {
 		var nearest;
 		var shortestDistance = Number.MAX_VALUE;
@@ -160,7 +109,7 @@ d3.csv('pca.csv', function (data){
 		return nearest;
 	}
 
-	function moveMeans() {
+	function moveMeans(lines, centroids, centroidCircles, points) {
 		centroids.forEach(function (centroid, i) {
 			var assignedPoints = points.filter(function (point) {
 				return point.cluster == i;
@@ -190,7 +139,7 @@ d3.csv('pca.csv', function (data){
 			});
 	}
 
-	function findClosest() {
+	function findClosest(lines, centroids, points) {
 		var ct = 0;
 		points.forEach(function (point) {
 			var newCluster = nearest(point, centroids);
@@ -206,12 +155,12 @@ d3.csv('pca.csv', function (data){
 		});
 	}
 
-	function cluster() {
-		findClosest();
-		moveMeans();
+	function cluster(lines, centroids, centroidCircles, points) {
+		findClosest(lines, centroids, points);
+		moveMeans(lines, centroids, centroidCircles, points);
 		setInterval(function () {
-			findClosest();
-			moveMeans();
+			findClosest(lines, centroids, points);
+			moveMeans(lines, centroids, centroidCircles, points);
 		}
 		, 1000);
 
@@ -219,8 +168,8 @@ d3.csv('pca.csv', function (data){
 
 	function algo_change(x){
 		console.log(algos[x]);
-		document.getElementById('algo').innerHTML = algos[algo];
 		algo = x;
+		document.getElementById('algo').innerHTML = algos[algo];
 
 		circle.transition().duration(1000)
 		.attr('fill', function (d) {
@@ -232,7 +181,60 @@ d3.csv('pca.csv', function (data){
 	function gaussian(){algo_change(0)}
 	function spectral(){algo_change(1)}
 	function agglomerative(){algo_change(2)}
-	function kmeans(){algo_change(3);cluster()}
+	function kmeans(){
+			var lines, circles, centroids;
+			var points = [];
+
+			for (var i = 0; i < sl.length; i++) {
+				points.push({
+					cluster: -1,
+					x: sl[i],
+					y: sw[i]
+				});
+			};
+
+			lines = canvas.selectAll('line').data(points)
+				.enter().append('line')
+				.attr('x1', function (d) {
+					return x(d.x);
+				})
+				.attr('y1', function (d) {
+					return y(d.y);
+				})
+				.attr('x2', function (d) {
+					return x(d.x);
+				})
+				.attr('y2', function (d) {
+					return y(d.y);
+				})
+				.attr('stroke', 'grey')
+				.attr('stroke-width', '1px')
+				.attr('opacity', 0.5);
+
+			centroids = new Array(3);
+			for (var i = 0; i < centroids.length; i++) {
+				var centroid_seed = Math.round(Math.random() * points.length);
+				console.log(points[centroid_seed]);
+				centroids[i] = {
+					x: points[centroid_seed].x,
+					y: points[centroid_seed].y
+				}
+			}
+
+			var centroidCircles = canvas.selectAll('.centroid').data(centroids)
+				.enter().append('circle')
+				.attr('class', 'centroid')
+				.attr('r', 5)
+				.attr('fill', '#333333')
+				.attr('cx', function (d) {
+					return x(d.x);
+				})
+				.attr('cy', function (d) {
+					return y(d.y);
+				});
+		algo_change(3);
+		cluster(lines, centroids, centroidCircles, points);
+	}
 
 
 	d3.select('#gaussian').on('click', gaussian);
