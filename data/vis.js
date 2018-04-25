@@ -1,11 +1,11 @@
 var margin = {
 	top: 20,
 	right: 20,
-	bottom: 50,
+	bottom: 20,
 	left: 20
 	},
-	width = 600 - margin.left - margin.right,
-	height = 500 - margin.top - margin.bottom;
+	width = 800 - margin.left - margin.right,
+	height = 600 - margin.top - margin.bottom;
 
 var canvas = d3.select("body").select("svg")
 	.attr("width", width + margin.left + margin.right)
@@ -40,7 +40,7 @@ d3.csv('pca.csv', function (data){
 		.append('circle')
 		.attr('class', 'dot')
 		.attr('r', function (d) {
-			return 6 * Math.pow(d.Followers,0.3) / 50;
+			return 8 * Math.pow(d.Followers,0.3) / 50;
 		})
 		.attr('cx', function (d) {
 			return x(d.Comp1);
@@ -54,22 +54,22 @@ d3.csv('pca.csv', function (data){
 		});
 
 	// hovering elements
-	var div = d3.select("body").append("div")
+	var div = d3.select("body").select("#innertext")
         .attr("class", "tooltip")
         .style("opacity", 0);
     //"listen" for when the mouse is hovering over a circle
     circle.on('mousemove', function (d) { //Optional add-on: have labels come up when hovering
-            div.transition().duration(1000)
+            div.transition().duration(500)
                 .style('left', d3.event.pageX - 20 + "px")
                 .style('top', function (d) {
                     return d3.event.pageY > height ? d3.event.pageY - 30 + 'px' : d3.event.pageY + 20 + 'px';
                 })
                 .style('opacity', '0.9')
                 .style('display', 'inline-block')
-            div.html('(' + (d.Names) + " , " + (d.Followers) + ")");
+            div.html("<span style='font-size:26'>" + d.Names + "</span>  <span style='color:	#484848; font-style:italic'>" + d.Followers.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " followers </span>" + d.Descriptions);
         })
         .on("mouseout", function (d) {
-            div.transition().duration(1000)
+            div.transition().duration(500)
                 .style('opacity', '0');
         });
 

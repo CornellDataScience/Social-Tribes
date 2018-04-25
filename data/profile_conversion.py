@@ -19,3 +19,6 @@ def get_all_names():
 
 def get_all_followers():
 	return [pjs[i]['followers_count'] for i in ids]
+
+def get_all_descriptions():
+	return [pjs[i]['description'] for i in ids]

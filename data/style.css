@@ -4,10 +4,20 @@ body {
 }
 
 svg {
-	width:600;
-	height:500;
+	width:800;
+	height:600;
 	margin:auto;
 	display:block;
+}
+
+#textbox {
+	float:left;
+	width: 400;
+	margin: auto;
+	display:block;
+	background-color: #E8E8E8;
+	margin-top: 30;
+	height: 600;
 }
 
 button {
