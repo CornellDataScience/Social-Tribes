@@ -1,12 +1,13 @@
 body {
-	margin-top:100px;
+	margin:0;
+	padding-top:5vh;
 	font-family: arial-black;
 	fill: #6e6e6e;
 }
 
 svg {
-	width:800;
-	height:600;
+	width:700;
+	height:500;
 	margin:auto;
 	display:block;
 }
@@ -19,7 +20,7 @@ svg {
 	display:block;
 	background-color: #E8E8E8;
 	margin-top: 30;
-	height: 600;
+	height: 590px;
 }
 
 button {

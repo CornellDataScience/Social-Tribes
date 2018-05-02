@@ -1,11 +1,12 @@
+src="https://unpkg.com/d3-3d/build/d3-3d.js"
 var margin = {
 	top: 20,
 	right: 20,
 	bottom: 20,
 	left: 20
 	},
-	width = 800 - margin.left - margin.right,
-	height = 600 - margin.top - margin.bottom;
+	width = 700 - margin.left - margin.right,
+	height = 500 - margin.top - margin.bottom;
 
 d3.selection.prototype.moveToFront = function(){
 		return this.each(function(){
@@ -34,7 +35,7 @@ var canvas = d3.select("body").select("svg")
 
 d3.csv('pca.csv', function (data){
 	var algo = 1;
-	var algos = ['GAUSSIAN', 'SPECTRAL', 'AGGLOMERATIVE', 'K-MEANS'];
+	var algos = ['Gaussian', 'Spectral', 'Agglomerative', 'K-Means'];
 
 	var sl = data.map(function (i) {
 		return i.Comp1;
@@ -50,7 +51,7 @@ d3.csv('pca.csv', function (data){
 		.domain([-1.5, 1.5])
 
 	var hexColors = ['#4abdac','#fc4a1a', '#f7b733']
-	var color = d3.scaleOrdinal(hexColors);
+	// var color = d3.scaleOrdinal(hexColors);
 
 	var circle = canvas.selectAll('.dot')
 		.data(data)
@@ -68,7 +69,7 @@ d3.csv('pca.csv', function (data){
 		})
 		.attr('fill', function (d) {
 			var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
-			return color(cluster_algos[algo]);
+			return hexColors[cluster_algos[algo]];
 		});
 
 	// hovering elements
@@ -222,12 +223,12 @@ d3.csv('pca.csv', function (data){
 	function algo_change(x){
 		console.log(algos[x]);
 		algo = x;
-		document.getElementById('algo').innerHTML = algos[algo];
+		document.getElementById('algo').innerHTML = "Currently using: " + algos[algo] + " Clustering";
 
 		circle.transition().duration(1000)
 		.attr('fill', function (d) {
 			var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
-			return color(cluster_algos[algo]);
+			return hexColors[cluster_algos[algo]];
 		});
 	}
 
@@ -236,8 +237,16 @@ d3.csv('pca.csv', function (data){
 		d3.selectAll('.centroid').remove();
 	}
 	function gaussian(){clearKMeans();algo_change(0)}
-	function spectral(){clearKMeans();algo_change(1)}
-	function agglomerative(){clearKMeans();algo_change(2)}
+	function spectral(){
+		// d3._3d()
+		clearKMeans();
+		algo_change(1)
+	}
+	function agglomerative(){
+		clearKMeans();
+		algo_change(2)
+	}
+
 	function kmeans(){
 			var lines, circles, centroids;
 			var points = [];
@@ -321,9 +330,6 @@ d3.csv('pca.csv', function (data){
 					canvas.selectAll('circle').filter(function (d) {
 						return d.Names == data[j]['Names'];}).moveToFront();
 
-
-
-
 					circle.transition().duration(1000)
 						.filter(function (d) {
 							return d.Names == data[j]['Names'];})
@@ -358,7 +364,7 @@ d3.csv('pca.csv', function (data){
 						})
 						.attr('fill', function (d) {
 							var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
-							return color(cluster_algos[algo]);
+							return hexColors[cluster_algos[algo]];
 						})
 
 						;
