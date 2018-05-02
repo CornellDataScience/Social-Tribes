@@ -1,7 +1,7 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<head>
-		<title> Scatterplot </title>
+		<title> Social Tribes </title>
 	</head>
 
 	<link rel="stylesheet" href="style.css" type="text/css" property="stylesheet">
@@ -91,18 +91,20 @@
 				<span class="popuptext" id="myPopup">
 					We aimed to observe the relationships between various political journalists through unsupervised machine learning.<br><br>
 					Each node represents a political journalist.<br><br>
+					All nodes belonging in the same cluster share the same color (the actual colors have no significance).<br><br>
 					The distance between two nodes represents their "similarity", using shared followers as the primary metric.
 					</span>
 			</div>
 			</center>
 		</div>
-		<div id='textbox'>
-			<div style='height:500' id='innertext'>
+		<div id='textbox' style='position: relative'>
+			<div style='height:500;  width:360; color: 		#505050; position: absolute' id='innerinst'><br><br><br><br><br><br><br><br><br><br><center>Hover over a node <br>to view more details</center></div>
+			<div style='height:500;  width:360; background-color:#E8E8E8; position: absolute' id='innertext'>
 			</div>
-			<center>Highlight a journalist:<br>
+			<center><div style='margin-top:510px;'>Highlight a journalist:<br>
             <input style='font-family: arial-black' type="text" id="myVal">
 						<button id='Select' style='margin-top:10px; margin-left:5px'>Select</button>
-        </form></center>
+        </form></div></center>
 		</div>
 
 	</body>

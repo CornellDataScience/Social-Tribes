@@ -76,15 +76,14 @@ d3.csv('pca.csv', function (data){
 	var div = d3.select("body").select("#innertext")
         .attr("class", "tooltip")
         .style("opacity", 0);
+	var div2 = d3.select("body").select("#innerinst")
     //"listen" for when the mouse is hovering over a circle
     circle.on('mousemove', function (d) { //Optional add-on: have labels come up when hovering
+						div2.transition().duration(500).style('opacity', '0');
+
+
             div.transition().duration(500)
-                .style('left', d3.event.pageX - 20 + "px")
-                .style('top', function (d) {
-                    return d3.event.pageY > height ? d3.event.pageY - 30 + 'px' : d3.event.pageY + 20 + 'px';
-                })
-                .style('opacity', '0.9')
-                .style('display', 'inline-block')
+                .style('opacity', '1.0')
 						var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
             div.html(
 							"<span style='font-size:26'>" + d.Names + "</span> <br>" +
@@ -99,7 +98,12 @@ d3.csv('pca.csv', function (data){
         .on("mouseout", function (d) {
             div.transition().duration(500)
                 .style('opacity', '0');
+
+						div2.transition().duration(1200)
+                .style('opacity', '1.0');
         });
+
+
 
 	// var xAxis = d3.axisBottom(x);
 	// canvas.append('g')
