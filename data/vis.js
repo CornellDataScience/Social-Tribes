@@ -281,7 +281,7 @@ d3.csv('pca.csv', function (data){
 		algo_change(2)
 
 		clump(c1, 0);
-		
+
 		d3.selectAll(".blurValues")
 			.transition().duration(1000).delay(1000)
 			.attrTween("values", function() {
@@ -290,7 +290,7 @@ d3.csv('pca.csv', function (data){
 			});
 
 		clump(c2, 1);
-		
+
 		d3.selectAll(".blurValues")
 			.transition().duration(1000).delay(1000)
 			.attrTween("values", function() {
@@ -299,28 +299,28 @@ d3.csv('pca.csv', function (data){
 			});
 
 		clump(c3, 2);
-		
+
 		d3.selectAll(".blurValues")
 			.transition().duration(1000).delay(1000)
 			.attrTween("values", function() {
 				return d3.interpolateString("1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -6",
 												"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -5");
 			});
-									
+
 	}
 
 	function clump(colorPoints, index) {
 		colorPoints = canvas.selectAll('circle').filter(function (d) {
-				var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
-				return cluster_algos[algo] == index;
+				return d.Agglomerative == index;
 			})
 			.transition()
 			.duration(2000).delay(function(d,i) { return 5 * i; })
 			.attr("cx", (index + 1) * 150)
 			.attr("cy", (index + 1) * 115)
 			.attr("r", function(d) {
-				return 20 * Math.pow(d.Followers,0.1);
+				return 0.8 * Math.pow(d.Followers,0.3);
 			})
+			.attr('fill', hexColors[index])
 			.style("opacity", 0.75);
 
 	}
@@ -391,12 +391,7 @@ d3.csv('pca.csv', function (data){
 				        .style("opacity", 0);
 
           div.transition().duration(500)
-              .style('left', d3.event.pageX - 20 + "px")
-              .style('top', function (d) {
-                  return d3.event.pageY > height ? d3.event.pageY - 30 + 'px' : d3.event.pageY + 20 + 'px';
-              })
               .style('opacity', '0.9')
-              .style('display', 'inline-block')
 					var cluster_algos = [data[j]['Gaussian'], data[j]['Spectral'], data[j]['Agglomerative'], data[j]['KMeans']];
 					div.html(
 						"<span style='font-size:26'>" + data[j]['Names'] + "</span> <br>" +
