@@ -246,9 +246,26 @@ d3.csv('pca.csv', function (data){
 		clearKMeans();
 		algo_change(1)
 	}
+
 	function agglomerative(){
 		clearKMeans();
+
 		algo_change(2)
+
+		canvas.selectAll("circle")
+					.transition()
+					//.duration(2000).delay(function(d,i) { return i*10; })
+					.attr("cx", 400)
+					.attr("cy", 200)
+					.style("opacity", 1);
+					
+				d3.selectAll(".blurValues")
+					.transition().duration(1000).delay(1000)
+					.attrTween("values", function() {
+						return d3.interpolateString("1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -6",
+													"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -5");
+					});
+				
 	}
 
 	function kmeans(){
