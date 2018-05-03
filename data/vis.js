@@ -211,8 +211,8 @@ d3.csv('pca.csv', function (data){
 	function cluster(lines, centroids, centroidCircles, points) {
 
 		var timesRun = 0;
-		findClosest(lines, centroids, points);
-		moveMeans(lines, centroids, centroidCircles, points);
+		// findClosest(lines, centroids, points);
+		// moveMeans(lines, centroids, centroidCircles, points);
 		var interval = setInterval(function () {
 			timesRun += 1;
 			findClosest(lines, centroids, points);
@@ -264,7 +264,7 @@ d3.csv('pca.csv', function (data){
 
 	function clearAggForKMeans() {
 		canvas.selectAll("circle")
-			.transition("move").duration(500)
+			.transition("move").duration(1000)
 			.attr('r', function (d) {
 				return 8 * Math.pow(d.Followers,0.3) / 50;
 			})
@@ -279,11 +279,11 @@ d3.csv('pca.csv', function (data){
 
 
 	function gaussian(){
-		
+
 		if (previouslyKMeans) {
 			clearKMeans();
 		}
-		
+
 		if (previouslyAgg) {
 			clearAggClustering();
 		}
@@ -301,11 +301,11 @@ d3.csv('pca.csv', function (data){
 		if (previouslyKMeans) {
 			clearKMeans();
 		}
-		
+
 		if (previouslyAgg) {
 			clearAggClustering();
 		}
-		
+
 		algo_change(1)
 
 		previouslyAgg = false;
@@ -374,9 +374,9 @@ d3.csv('pca.csv', function (data){
 	function kmeans(){
 		previouslyKMeans = true;
 
-		if (previouslyAgg) { 
+		if (previouslyAgg) {
 			//clearAggClustering();
-			clearAggForKMeans(); 
+			clearAggForKMeans();
 		}
 
 		previouslyAgg = false;
