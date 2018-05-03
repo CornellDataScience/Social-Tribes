@@ -237,6 +237,9 @@ d3.csv('pca.csv', function (data){
 		});
 	}
 
+	var previouslyKMeans = false;
+	var previouslyAgg = false;
+
 	function clearKMeans(){
 		d3.selectAll('line').remove();
 		d3.selectAll('.centroid').remove();
@@ -244,37 +247,80 @@ d3.csv('pca.csv', function (data){
 
 	function clearAggClustering() {
 		canvas.selectAll("circle")
-		.transition("move").duration(2000)
-					.delay(function(d,i) { return i*5; })
-		.attr('r', function (d) {
-			return 8 * Math.pow(d.Followers,0.3) / 50;
-		})
-		.attr('cx', function (d) {
-			return x(d.Comp1);
-		})
-		.attr('cy', function (d) {
-			return y(d.Comp2);
-		})
-		.style("opacity", 1);
+			.transition("move").duration(2000)
+						.delay(function(d,i) { return i * 5; })
+			.attr('r', function (d) {
+				return 8 * Math.pow(d.Followers,0.3) / 50;
+			})
+			.attr('cx', function (d) {
+				return x(d.Comp1);
+			})
+			.attr('cy', function (d) {
+				return y(d.Comp2);
+			})
+			.style("opacity", 1);
 	}
 
+
+	function clearAggForKMeans() {
+		canvas.selectAll("circle")
+			.transition("move").duration(500)
+			.attr('r', function (d) {
+				return 8 * Math.pow(d.Followers,0.3) / 50;
+			})
+			.attr('cx', function (d) {
+				return x(d.Comp1);
+			})
+			.attr('cy', function (d) {
+				return y(d.Comp2);
+			})
+			.style("opacity", 1);
+	}
+
+
 	function gaussian(){
-		clearKMeans();
-		clearAggClustering();
-		algo_change(0)}
+		
+		if (previouslyKMeans) {
+			clearKMeans();
+		}
+		
+		if (previouslyAgg) {
+			clearAggClustering();
+		}
+
+		algo_change(0)
+
+		previouslyAgg = false;
+		previouslyKMeans = false;
+	}
+
+
 
 	function spectral(){
 		// d3._3d()
-		clearKMeans();
-		clearAggClustering();
+		if (previouslyKMeans) {
+			clearKMeans();
+		}
+		
+		if (previouslyAgg) {
+			clearAggClustering();
+		}
+		
 		algo_change(1)
+
+		previouslyAgg = false;
+		previouslyKMeans = false;
 	}
 
 	//c1 is all of the circles of color1, c2 is all of the circles of color2, etc.
 	var c1, c2, c3;
 
 	function agglomerative(){
-		clearKMeans();
+		previouslyAgg = true;
+
+		if (previouslyKMeans) {
+			clearKMeans();
+		}
 
 		algo_change(2)
 
@@ -312,7 +358,7 @@ d3.csv('pca.csv', function (data){
 				return d.Agglomerative == index;
 			})
 			.transition()
-			.duration(2000).delay(function(d,i) { return 5 * i; })
+			.duration(2000).delay(function(d,i) { return i * 5; })
 			.attr("cx", (index + 1) * 150)
 			.attr("cy", (index + 1) * 115)
 			.attr("r", function(d) {
@@ -324,7 +370,13 @@ d3.csv('pca.csv', function (data){
 	}
 
 	function kmeans(){
-		clearAggClustering();
+		previouslyKMeans = true;
+
+		if (previouslyAgg) { 
+			//clearAggClustering();
+			clearAggForKMeans(); 
+		}
+
 			var lines, circles, centroids;
 			var points = [];
 
