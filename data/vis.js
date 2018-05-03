@@ -322,6 +322,8 @@ d3.csv('pca.csv', function (data){
 			clearKMeans();
 		}
 
+		previouslyKMeans = false;
+
 		algo_change(2)
 
 		clump(c1, 0);
@@ -376,6 +378,8 @@ d3.csv('pca.csv', function (data){
 			//clearAggClustering();
 			clearAggForKMeans(); 
 		}
+
+		previouslyAgg = false;
 
 			var lines, circles, centroids;
 			var points = [];
