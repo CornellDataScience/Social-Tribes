@@ -356,13 +356,14 @@ d3.csv('pca.csv', function (data){
 	}
 
 	function clump(colorPoints, index) {
+		var aggCentroids = [[0.98357655389628795, 0.042222006389032063], [-1.9114944687702777, 0.17076873899592768], [-0.4882784109814387, -0.13816327866093175]]
 		colorPoints = canvas.selectAll('circle').filter(function (d) {
 				return d.Agglomerative == index;
 			})
 			.transition()
 			.duration(2000).delay(function(d,i) { return i * 5; })
-			.attr("cx", (index + 1) * 150)
-			.attr("cy", (index + 1) * 115)
+			.attr("cx", x(aggCentroids[index][0]))
+			.attr("cy", y(aggCentroids[index][1]))
 			.attr("r", function(d) {
 				return 0.8 * Math.pow(d.Followers,0.3);
 			})
