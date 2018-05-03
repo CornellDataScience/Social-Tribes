@@ -253,10 +253,6 @@ d3.csv('pca.csv', function (data){
 		.attr('cy', function (d) {
 			return y(d.Comp2);
 		})
-		.attr('fill', function (d) {
-			var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
-			return hexColors[cluster_algos[algo]];
-		})
 		.style("opacity", 1);
 	}
 
