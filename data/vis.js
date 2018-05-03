@@ -372,6 +372,13 @@ d3.csv('pca.csv', function (data){
 
 	}
 
+canvas.selectAll('circle').on("click", function(d) {
+	if(previouslyAgg){
+		clearAggClustering();
+		previouslyAgg = false;
+	}
+});
+
 	function kmeans(){
 		previouslyKMeans = true;
 
@@ -439,14 +446,14 @@ d3.csv('pca.csv', function (data){
 	function handleClick(){
       var name = document.getElementById("myVal").value
 			for(var j in data){
-				if(data[j]['Names'].includes(name)){
+				if(data[j]['Names'].toLowerCase().includes(name.toLowerCase())){
 					console.log(data[j]['Names'])
 					var div = d3.select("body").select("#innertext")
 				        .attr("class", "tooltip")
 				        .style("opacity", 0);
 
           div.transition().duration(500)
-              .style('opacity', '0.9')
+              .style('opacity', '1.0')
 					var cluster_algos = [data[j]['Gaussian'], data[j]['Spectral'], data[j]['Agglomerative'], data[j]['KMeans']];
 					div.html(
 						"<span style='font-size:26'>" + data[j]['Names'] + "</span> <br>" +
