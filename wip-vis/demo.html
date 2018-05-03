@@ -1,0 +1,117 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<head>
+		<title> Social Tribes </title>
+	</head>
+
+	<link rel="stylesheet" href="style.css" type="text/css" property="stylesheet">
+	<style>
+	/* Popup container - can be anything you want */
+	.popup {
+	    position: relative;
+	    display: inline-block;
+	    cursor: pointer;
+	    -webkit-user-select: none;
+	    -moz-user-select: none;
+	    -ms-user-select: none;
+	    user-select: none;
+	}
+
+	/* The actual popup */
+	.popup .popuptext {
+	    visibility: hidden;
+	    width: 600px;
+	    background-color: #555;
+	    color: #fff;
+	    text-align: center;
+	    border-radius: 6px;
+	    padding: 8px 0;
+	    position: absolute;
+	    z-index: 1;
+	    bottom: 125%;
+	    left: 50%;
+	    margin-left: -300px;
+	}
+
+	/* Popup arrow */
+	.popup .popuptext::after {
+	    content: "";
+	    position: absolute;
+	    top: 100%;
+	    left: 50%;
+	    margin-left: -5px;
+	    border-width: 5px;
+	    border-style: solid;
+	    border-color: #555 transparent transparent transparent;
+	}
+
+	/* Toggle this class - hide and show the popup */
+	.popup .show {
+	    visibility: visible;
+	    -webkit-animation: fadeIn 1s;
+	    animation: fadeIn 1s;
+	}
+
+	/* Add animation (fade in the popup) */
+	@-webkit-keyframes fadeIn {
+	    from {opacity: 0;}
+	    to {opacity: 1;}
+	}
+
+	@keyframes fadeIn {
+	    from {opacity: 0;}
+	    to {opacity:1 ;}
+	}
+	</style>
+	</head>
+
+
+
+	<script>
+	// When the user clicks on div, open the popup
+	function myFunction() {
+	    var popup = document.getElementById("myPopup");
+	    popup.classList.toggle("show");
+	}
+	</script>
+
+	<body>
+		<div style='width:1000; float:left'>
+			<div style='font-size: 4.5vh; text-align: center'>Clustering Of Political Journalists On Twitter</div>
+			<div id='algo' style='color: 	#585858; font-size: 2vh; text-align: center'>Currently using: Spectral Clustering</div>
+			<center><svg></svg></center>
+			<div style='margin:auto; display:block; width: 480px'>
+				<button id='gaussian'>Gaussian</button>
+				<button id='spectral'>Spectral</button>
+				<button id='agglomerative'>Agglomerative</button>
+				<button id='kmeans'>K-Means</button>
+			</div><br>
+			<center>
+			<div style='width:100%' class="popup" onclick="myFunction()">Learn more
+				<span class="popuptext" id="myPopup">
+					We aimed to observe the relationships between various political journalists through unsupervised machine learning.<br><br>
+					Each node represents a political journalist.<br><br>
+					All nodes belonging in the same cluster share the same color (the actual colors have no significance).<br><br>
+					The distance between two nodes represents their "similarity", using shared followers as the primary metric.
+					</span>
+			</div>
+			</center>
+		</div>
+		<div id='textbox' style='position: relative'>
+			<div style='height:500;  width:360; color: 		#505050; position: absolute' id='innerinst'><br><br><br><br><br><br><br><br><br><br><center>Hover over a node <br>to view more details</center></div>
+			<div style='height:500;  width:360; background-color:#E8E8E8; position: absolute' id='innertext'>
+			</div>
+			<center><div style='margin-top:510px;'>Highlight a journalist:<br>
+            <input style='font-family: arial-black' type="text" id="myVal">
+						<button id='Select' style='margin-top:10px; margin-left:5px'>Select</button>
+        </form></div></center>
+		</div>
+
+	</body>
+
+
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="vis.js"></script>
+
+
+</html>
