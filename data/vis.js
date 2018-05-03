@@ -72,6 +72,18 @@ d3.csv('pca.csv', function (data){
 			return hexColors[cluster_algos[algo]];
 		});
 
+//FOR YOU SHALIN
+//c1 is all of the circles of color1, c2 is all of the circles of color2, etc.
+	var c1 = canvas.selectAll('circle').filter(function (d) {
+		var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
+		return cluster_algos[algo] == 0;});
+	var c2 = canvas.selectAll('circle').filter(function (d) {
+		var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
+		return cluster_algos[algo] == 1;});
+	var c3 = canvas.selectAll('circle').filter(function (d) {
+		var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
+		return cluster_algos[algo] == 2;});
+
 	// hovering elements
 	var div = d3.select("body").select("#innertext")
         .attr("class", "tooltip")
@@ -350,6 +362,8 @@ d3.csv('pca.csv', function (data){
 					);
 					canvas.selectAll('circle').filter(function (d) {
 						return d.Names == data[j]['Names'];}).moveToFront();
+
+
 
 					circle.transition().duration(1000)
 						.filter(function (d) {
