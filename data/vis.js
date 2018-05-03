@@ -244,6 +244,8 @@ d3.csv('pca.csv', function (data){
 
 	function clearAggClustering() {
 		canvas.selectAll("circle")
+		.transition("move").duration(2000)
+					.delay(function(d,i) { return i*5; })
 		.attr('r', function (d) {
 			return 8 * Math.pow(d.Followers,0.3) / 50;
 		})
@@ -317,7 +319,7 @@ d3.csv('pca.csv', function (data){
 				return 0.8 * Math.pow(d.Followers,0.3);
 			})
 			.attr('fill', hexColors[index])
-			.style("opacity", 0.75);
+			.style("opacity", 1);
 
 	}
 
