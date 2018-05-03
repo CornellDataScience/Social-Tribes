@@ -70,19 +70,8 @@ d3.csv('pca.csv', function (data){
 		.attr('fill', function (d) {
 			var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
 			return hexColors[cluster_algos[algo]];
-		});
-
-//FOR YOU SHALIN
-//c1 is all of the circles of color1, c2 is all of the circles of color2, etc.
-	var c1 = canvas.selectAll('circle').filter(function (d) {
-		var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
-		return cluster_algos[algo] == 0;});
-	var c2 = canvas.selectAll('circle').filter(function (d) {
-		var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
-		return cluster_algos[algo] == 1;});
-	var c3 = canvas.selectAll('circle').filter(function (d) {
-		var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
-		return cluster_algos[algo] == 2;});
+		})
+		.style("opacity", 1);
 
 	// hovering elements
 	var div = d3.select("body").select("#innertext")
@@ -252,35 +241,92 @@ d3.csv('pca.csv', function (data){
 		d3.selectAll('line').remove();
 		d3.selectAll('.centroid').remove();
 	}
-	function gaussian(){clearKMeans();algo_change(0)}
+
+	function clearAggClustering() {
+		canvas.selectAll("circle")
+		.attr('r', function (d) {
+			return 8 * Math.pow(d.Followers,0.3) / 50;
+		})
+		.attr('cx', function (d) {
+			return x(d.Comp1);
+		})
+		.attr('cy', function (d) {
+			return y(d.Comp2);
+		})
+		.attr('fill', function (d) {
+			var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
+			return hexColors[cluster_algos[algo]];
+		})
+		.style("opacity", 1);
+	}
+
+	function gaussian(){
+		clearKMeans();
+		clearAggClustering();
+		algo_change(0)}
+
 	function spectral(){
 		// d3._3d()
 		clearKMeans();
+		clearAggClustering();
 		algo_change(1)
 	}
+
+	//c1 is all of the circles of color1, c2 is all of the circles of color2, etc.
+	var c1, c2, c3;
 
 	function agglomerative(){
 		clearKMeans();
 
 		algo_change(2)
 
-		canvas.selectAll("circle")
-					.transition()
-					//.duration(2000).delay(function(d,i) { return i*10; })
-					.attr("cx", 400)
-					.attr("cy", 200)
-					.style("opacity", 1);
-					
-				d3.selectAll(".blurValues")
-					.transition().duration(1000).delay(1000)
-					.attrTween("values", function() {
-						return d3.interpolateString("1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -6",
-													"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -5");
-					});
-				
+		clump(c1, 0);
+		
+		d3.selectAll(".blurValues")
+			.transition().duration(1000).delay(1000)
+			.attrTween("values", function() {
+				return d3.interpolateString("1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -6",
+												"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -5");
+			});
+
+		clump(c2, 1);
+		
+		d3.selectAll(".blurValues")
+			.transition().duration(1000).delay(1000)
+			.attrTween("values", function() {
+				return d3.interpolateString("1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -6",
+												"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -5");
+			});
+
+		clump(c3, 2);
+		
+		d3.selectAll(".blurValues")
+			.transition().duration(1000).delay(1000)
+			.attrTween("values", function() {
+				return d3.interpolateString("1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -6",
+												"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -5");
+			});
+									
+	}
+
+	function clump(colorPoints, index) {
+		colorPoints = canvas.selectAll('circle').filter(function (d) {
+				var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
+				return cluster_algos[algo] == index;
+			})
+			.transition()
+			.duration(2000).delay(function(d,i) { return 5 * i; })
+			.attr("cx", (index + 1) * 150)
+			.attr("cy", (index + 1) * 115)
+			.attr("r", function(d) {
+				return 20 * Math.pow(d.Followers,0.1);
+			})
+			.style("opacity", 0.75);
+
 	}
 
 	function kmeans(){
+		clearAggClustering();
 			var lines, circles, centroids;
 			var points = [];
 
