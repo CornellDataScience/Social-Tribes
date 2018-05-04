@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>Agglomerative Clustering implementation in JS </title>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/mathjs/4.1.1/math.min.js"></script>
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src = "./agglomerative-clustering.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+<style>
+	.centered {
+	  text-align: center;
+	}
+
+	.card {
+	  padding: 20px;
+	}
+
+	svg{
+	  display:block;
+	  margin:auto;
+	}
+
+	input{
+	  display: inline-block;
+	  margin: 0px 10px 0px 10px;
+	}
+	input[type="checkbox"] {
+  		transform:scale(2, 2);
+	}
+</style>
+<div class = "card centered col-md-8 offset-md-2" width = "800" height = "900">
+<h1> CDS DV - Social Tribes - Agglomerative Clustering Visualization</h1>
+<p>Agglomerative clustering works by merging the two most similar clusters at each iteration.<br>Step through the algorithm one iteration at a time, or select the auto box to automatically animate it. The similarity metric used for this algorithm is the euclidean distance between the centroids of clusters.</p>
+<div class = "options">
+<input type="button" id = 'start' value="Start/Reset">
+<input type="button" id = 'step' value="Step Simulation">
+<input type="checkbox" id = 'toggle_auto' value="Auto">
+<label for="toggle_auto">Auto</label>
+</div>
+<svg width="760" height="760"></svg>
+</div>
+<script>
+var auto = false;
+var clusters;
+//set the params here
+dist = _euclidean;
+metric = _centroid;
+
+//draw current clusters, call step again in 1 second
+function step(){
+	console.log('step');
+	if (auto){setTimeout(step,1000);}
+}
+
+function start(){
+	d3.text("similarity.csv",function(error,csvdata){
+	  data = d3.csvParseRows(csvdata, function(row){
+	    return row.map(x => Number(x));
+	  });
+	  clusters = init(data);
+	  step();
+	});
+}
+
+//event listeners
+var toggle = document.getElementById('toggle_auto');
+toggle.addEventListener('change', function(a){
+	auto = a.target.checked;
+	if (auto){step();} else{clearTimeout(step);}
+	
+});
+
+var startbtn = document.getElementById('start');
+startbtn.addEventListener('click', function(a){
+	clearTimeout(step);
+	auto = false;
+	toggle.checked = false;
+	start();
+});
+
+var stepbtn = document.getElementById('step');
+stepbtn.addEventListener('click', function(a){
+	clearTimeout(step);
+	if(!auto){step(clusters);}
+	auto = false;
+	toggle.checked = false;
+});
+
+</script>
+</body>	
+</html>
