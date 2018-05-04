@@ -11,23 +11,47 @@
   stroke-width: 1.5px;
 }
 
-</style>
+.vis {
+  padding-left:25px;
+  margin-left:25px;
+}
 
-<form name = "selectType">
-  <input type="radio" name="mode" id="tree" checked="true">
-  <label for="tree">Dendrogram</label>
-  <input type="radio" name="mode" id="tidytree">
-  <label for="tidytree">Tidy Dendrogram</label>
-  <input type="radio" name="mode" id="tidyradial">
-  <label for="tidyradial">Radial Dendrogram</label>
-</form>
+.centered {
+  text-align: center;
+}
+
+#infoBottom {
+  max-height:500px;
+  overflow:scroll;
+}
+
+.card {
+  padding: 20px;
+}
+
+</style>
+<h1 class = "centered" > CDS DV - Social Tribes - Dendrograms Visualizations</h1>
 <div class = "row">
-  <div class = "col-md-6">
-    <svg width="900" height="900"></svg>
+  <div class = "vis" width = "900">
+  <div class = "card centered">
+    Select a Visualization Method, Click Node to View Details
+    <form class = "centered" name = "selectType">
+      <input type="radio" name="mode" id="tree" checked="true">
+      <label for="tree">Dendrogram</label>
+      <input type="radio" name="mode" id="tidytree">
+      <label for="tidytree">Tidy Dendrogram</label>
+      <input type="radio" name="mode" id="tidyradial">
+      <label for="tidyradial">Radial Dendrogram</label>
+    </form>
   </div>
-  <div class = "col-md-6">
-    <p id = "infoTop"></p>
-    <p id = "infoBottom"></p>
+  <br>
+  <svg width="900" height="900"></svg>
+  </div>
+  <div class = "col-md-3 col-md-offset-9">
+    <div class = "card" height = "900">
+      <p id = "infoTop"></p>
+      <p id = "infoBottom"></p>
+    </div>
   </div>
 </div>
 <script src = "./dendrograms.js"></script>
