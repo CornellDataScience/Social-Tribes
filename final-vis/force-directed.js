@@ -22,6 +22,7 @@ var nodes = [];
 var links = [];
 var data;
 var rawdata;
+var selected;
 
 //initializing nodes
 for (var i = 0; i<432; i++){
@@ -57,40 +58,29 @@ function sim(threshold){
       }
     }
   }
+  
   link = link.data(links, function(d) { return d.source.id + "-" + d.target.id; });
   link.exit().remove();
+
   link = link
     .data(links)
     .enter().append("line")
     .attr("class", "link").merge(link);
+
   simulation.force("link").links(links);
-  node = node
-  .data(nodes)
-  .enter().append("circle")
-    .attr("class", "node")
-    .attr("r", 6)
-    .style("fill", function(d){
-      var name = names[d.num];
-      if (influential.includes(name)){
-        return "red";
-      } else { return "gray";}
-    })
-    .on("mouseover", function(d) {
-        div.transition()    
-        .duration(250)    
-        .style("opacity", 0.9);      
-        div.html(names[d.num])  
-          .style("left", (d3.event.pageX) + "px")   
-          .style("top", (d3.event.pageY - 28) + "px");  
-        })          
-    .on("mouseout", function(d) {   
-        div.transition()    
-        .duration(250)    
-        .style("opacity", 0); 
-    })
-    .merge(node);
-  simulation.alpha(1).restart();
-  
+
+  node.attr("fill", function(d){
+    var name = names[d.num];
+    if (name == selected){
+      return "yellow";
+    }
+    else if (influential.includes(name)){
+      return "red";
+    } else { 
+      return "gray";
+    }
+  });
+  simulation.alpha(1).restart(); 
 }
 
 //loading data
@@ -101,7 +91,7 @@ d3.text("similarity.csv",function(error,csvdata){
   .enter().append("circle")
     .attr("class", "node")
     .attr("r", 6)
-    .style("fill", function(d){
+    .attr("fill", function(d){
       var name = names[d.num];
       if (influential.includes(name)){
         return "red";
@@ -122,7 +112,7 @@ d3.text("similarity.csv",function(error,csvdata){
     })
     .merge(node);
   simulation.nodes(nodes);
-  sim(1);
+  sim(1, undefined);
 });
 
 //handling simulation ticks
@@ -147,3 +137,12 @@ slider.oninput = function() {
 slider.onchange = function(){
     sim(Number(this.value)/100);
 }
+
+//autocomplete
+$('#searchbar').autocomplete({
+    lookup: names,
+    onSelect: function (suggestion) {
+      selected = suggestion.value;
+      sim(Number(slider.value)/100);
+    }
+});
