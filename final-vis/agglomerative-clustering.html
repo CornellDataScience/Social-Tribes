@@ -39,7 +39,7 @@
 <input type="checkbox" id = 'toggle_auto' value="Auto">
 <label for="toggle_auto">Auto</label>
 </div>
-<svg width="760" height="760"></svg>
+<svg width="750" height="600"></svg>
 </div>
 <script>
 
@@ -51,10 +51,10 @@ dist = _euclidean;
 metric = _centroid;
 
 var xScale = d3.scaleLinear()
-	.range([0, 760])
+	.range([0, 750])
 	.domain([-3, 3]);
 var yScale = d3.scaleLinear()
-		.range([760,0])
+		.range([600,0])
 		.domain([-1.5, 1.5])
 
 var interval = 250;
