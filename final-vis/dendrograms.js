@@ -98,8 +98,8 @@ function display(data){
     }
   });
   people.sort(function(a,b){return b.length - a.length});
-  top.innerHTML = "<span style = 'font-weight:bold'>SIZE OF CLUSTER:</span> "+size.toString();
-  bottom.innerHTML = "<span style = 'font-weight:bold'>PEOPLE IN CLUSTER:</span><br>" + people.toString();    
+  top.innerHTML = "<span style = 'font-style:italic'>Size of Cluster:</span> "+size.toString();
+  bottom.innerHTML = "<span style = 'font-style:italic'>People in Cluster (bold = more influential):</span><br>" + people.toString();    
 }
 
 //handles when a node is selected
