@@ -1,7 +1,7 @@
 body {
 	margin:0;
 	padding-top:5vh;
-	font-family: arial-black;
+	font-family: Yantramanav;
 	fill: #6e6e6e;
 }
 
@@ -12,6 +12,15 @@ svg {
 	display:block;
 }
 
+.autocomplete-suggestions{
+	background-color: 	#606060;
+	height:50px;
+	padding-left:2px;
+	overflow: hidden;
+	line-height:25px;
+	color:#E8E8E8
+}
+
 #textbox {
 	padding:20;
 	float:left;
@@ -19,14 +28,16 @@ svg {
 	margin: auto;
 	display:block;
 	background-color: #E8E8E8;
-	margin-top: 30;
-	height: 590px;
+	height: 600px;
 }
 
 button {
 	margin-left: 25px;
+	font-size:12;
+	font-weight:300;
+	color: #282828;
 	height: 30px;
-	font-family: arial-black;
+font-family: NeueMontreal;
 	fill: #6e6e6e;
 }
 
