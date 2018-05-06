@@ -3,17 +3,68 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="./final-vis/styles.css" type="text/css" property="stylesheet">
 
+<style>
+	.vizlink{
+		box-shadow: 3px 3px 12px grey;
+		cursor: pointer;
+	}
+
+	.viztitle{
+		font-family:NeueMontreal;
+		font-size:1.3rem;
+	}
+
+</style>
 <body style='text-align:center'>
-	<img src='cds.png' style='height: 100px; margin:40px; margin-top:100px'></img>
-	<div>
+	<img src='images/cds.png' style='height: 80px; margin-top:7vh; margin-bottom:1vh'></img>
+	<div style='margin-bottom:7vh;'>
 	<div style='font-family: NeueMontreal; font-size:55px; width:100%; line-height:80px; margin:5px 0px;'>Social Tribes<br>
 		<div style='font-family: Yantramanav; font-size:20px; line-height:10px; margin-bottom:20px'> Max Chen, Sam Kitterman, Shalin Mehta, Kevin Ngo, Danny Yang </div></div>
 	</div>
-<div style='background-color:blue'></div>
-<ul>
-	<li><a href = "./final-vis/clusters.html">clusters visualization</a></li>
-	<li><a href = "./final-vis/dendrograms.html">dendrograms</a></li>
-	<li><a href = "./final-vis/force-directed.html">force-directed layout</a></li>
-	<li><a href = "./final-vis/agglomerative-clustering.html">agglomerative clustering</a></li>
-</ul>
+	<div class="row">
+		<div class="col-md-3">
+			<center>
+				<div class="card vizlink" onclick="location.href = 'final-vis/clusters.html';" style="width: 18rem;">
+				  <img class="card-img-top" src="images/clusters.png" alt="Card image cap">
+				  <div class="card-body">
+				    <h5 class="card-title viztitle">Clusters</h5>
+				    <p class="card-text">An overview of various clustering algorithms.</p>
+				  </div>
+				</div>
+			</center>
+		</div>
+		<div class="col-md-3">
+			<center>
+				<div class="card vizlink" onclick="location.href = 'final-vis/dendrograms.html';" style="width: 18rem;">
+				  <img class="card-img-top" src="images/dendrograms.png" alt="Card image cap">
+				  <div class="card-body">
+				    <h5 class="card-title viztitle">Dendrogram</h5>
+				    <p class="card-text">A hierarchical visualization of agglomerative clustering.</p>
+				  </div>
+				</div>
+			</center>
+		</div>
+		<div class="col-md-3">
+			<center>
+				<div class="card vizlink" onclick="location.href = 'final-vis/force-directed.html';" style="width: 18rem;">
+				  <img class="card-img-top" src="images/force-directed.png" alt="Card image cap">
+				  <div class="card-body">
+				    <h5 class="card-title viztitle">Force-Directed</h5>
+				    <p class="card-text">A dynamic graph highlighting the strongest connections.</p>
+				  </div>
+				</div>
+			</center>
+		</div>
+		<div class="col-md-3">
+			<center>
+				<div class="card vizlink" onclick="location.href = 'final-vis/agglomerative-clustering.html';" style="width: 18rem;">
+				  <img class="card-img-top" src="images/agglomerative-clustering.png" alt="Card image cap">
+				  <div class="card-body">
+				    <h5 class="card-title viztitle">Agglomerative Clustering</h5>
+				    <p class="card-text">A visualization detailing the process of agglomerative clustering.</p>
+				  </div>
+				</div>
+			</center>
+		</div>
+	</div>
 </body>
