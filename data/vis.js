@@ -51,7 +51,6 @@ d3.csv('pca.csv', function (data){
 		.domain([-1.5, 1.5])
 
 	var hexColors = ['#4abdac','#fc4a1a', '#f7b733']
-	// var color = d3.scaleOrdinal(hexColors);
 
 	var circle = canvas.selectAll('.dot')
 		.data(data)
@@ -142,7 +141,38 @@ d3.csv('pca.csv', function (data){
 	// 		return d;
 	// 	});
 
+	function algo_change(x){
+		console.log(algos[x]);
+		algo = x;
+		document.getElementById('algo').innerHTML = "Currently using: " + algos[algo] + " Clustering";
+
+		circle.transition().duration(1000)
+		.attr('fill', function (d) {
+			var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
+			return hexColors[cluster_algos[algo]];
+		});
+	}
+
 	// K means
+
+	////////////// function to try to update colors for K Means in real time - currently buggy
+
+	// function updateClusterColors(points) {
+	// 	var cluster0Points = canvas.selectAll("circle").data(points).filter(function (point) {
+	// 			return point.cluster == 0;
+	// 		})
+	// 		.attr("fill", hexColors[0])
+
+	// 	var cluster1Points = canvas.selectAll("circle").data(points).filter(function (point) {
+	// 			return point.cluster == 1;
+	// 		})
+	// 		.attr("fill", hexColors[1]);
+
+	// 	var cluster2Points = canvas.selectAll("circle").data(points).filter(function (point) {
+	// 			return point.cluster == 2;
+	// 		})
+	// 		.attr("fill", hexColors[2]);
+	// }
 
 	function nearest(point, candidates) {
 		var nearest;
@@ -190,6 +220,8 @@ d3.csv('pca.csv', function (data){
 			.attr('y2', function (point) {
 				return y(centroids[point.cluster].y);
 			});
+
+		//updateClusterColors(points);
 	}
 
 	function findClosest(lines, centroids, points) {
@@ -225,20 +257,10 @@ d3.csv('pca.csv', function (data){
 
 	}
 
-	function algo_change(x){
-		console.log(algos[x]);
-		algo = x;
-		document.getElementById('algo').innerHTML = "Currently using: " + algos[algo] + " Clustering";
-
-		circle.transition().duration(1000)
-		.attr('fill', function (d) {
-			var cluster_algos = [d.Gaussian, d.Spectral, d.Agglomerative, d.KMeans];
-			return hexColors[cluster_algos[algo]];
-		});
-	}
-
 	var previouslyKMeans = false;
 	var previouslyAgg = false;
+
+	// clearing methods
 
 	function clearKMeans(){
 		d3.selectAll('line').remove();
@@ -372,21 +394,12 @@ d3.csv('pca.csv', function (data){
 
 	}
 
-canvas.selectAll('circle').on("click", function(d) {
-	if(previouslyAgg){
-		clearAggClustering();
-		previouslyAgg = false;
-	}
-});
-
 	function kmeans(){
 		previouslyKMeans = true;
 
 		if (previouslyAgg) {
-			//clearAggClustering();
 			clearAggForKMeans();
 		}
-
 		previouslyAgg = false;
 
 			var lines, circles, centroids;
@@ -440,8 +453,21 @@ canvas.selectAll('circle').on("click", function(d) {
 					return y(d.y);
 				});
 		algo_change(3);
+
+		// canvas.selectAll("circle")
+		// 	.transition().duration(1000)
+		// 	.attr("fill", "grey");
+
 		cluster(lines, centroids, centroidCircles, points);
 	}
+
+	// expanding nodes when clicking the canvas
+	canvas.selectAll('circle').on("click", function(d) {
+		if(previouslyAgg){
+			clearAggClustering();
+			previouslyAgg = false;
+		}
+	});
 
 	function handleClick(){
       var name = document.getElementById("myVal").value
