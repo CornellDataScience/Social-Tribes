@@ -12,6 +12,13 @@ svg {
 	display:block;
 }
 
+h1 {
+    font-size: 34;
+    text-align: center; 
+    font-family: "Times"; 
+    font-weight: 500;
+}
+
 #textbox {
 	padding:20;
 	float:left;
