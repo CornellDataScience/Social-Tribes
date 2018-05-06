@@ -137,32 +137,27 @@ d3.csv('pca.csv', function (data){
 
 	////////// Clustering Algorithms 
 
-	function gaussian(){
-
-		if (previouslyKMeans) {
+	function gaussian() {
+		if (previouslyKMeans)
 			clearKMeans();
-		}
 
-		if (previouslyAgg) {
+		if (previouslyAgg)
 			clearAggClustering();
-		}
 
-		algo_change(0)
+		algo_change(0);
 
 		previouslyAgg = false;
 		previouslyKMeans = false;
 	}
 
-	function spectral(){
-		if (previouslyKMeans) {
+	function spectral() {
+		if (previouslyKMeans)
 			clearKMeans();
-		}
 
-		if (previouslyAgg) {
+		if (previouslyAgg)
 			clearAggClustering();
-		}
 
-		algo_change(1)
+		algo_change(1);
 
 		previouslyAgg = false;
 		previouslyKMeans = false;
