@@ -145,7 +145,6 @@ d3.csv('pca.csv', function (data){
 			clearAggClustering();
 
 		algo_change(0);
-
 		previouslyAgg = false;
 		previouslyKMeans = false;
 	}
@@ -158,7 +157,6 @@ d3.csv('pca.csv', function (data){
 			clearAggClustering();
 
 		algo_change(1);
-
 		previouslyAgg = false;
 		previouslyKMeans = false;
 	}
@@ -422,39 +420,39 @@ d3.csv('pca.csv', function (data){
 	}
 
 	// mouse click events
-	function handleClick(){
+	function handleClick() {
       var name = document.getElementById("myVal").value
 			for(var j in data){
-				if(data[j]['Names'].toLowerCase().includes(name.toLowerCase())){
+				if(data[j]['Names'].toLowerCase().includes(name.toLowerCase())) {
 					console.log(data[j]['Names'])
 					var div = d3.select("body").select("#innertext")
 				        .attr("class", "tooltip")
 				        .style("opacity", 0);
 
-          div.transition().duration(500)
-              .style('opacity', '1.0')
-					var cluster_algos = [data[j]['Gaussian'], data[j]['Spectral'], data[j]['Agglomerative'], data[j]['KMeans']];
-					div.html(
-						"<span style='font-size:32; font-family:NeueMontreal'>" + data[j]['Names'] + "</span> <br>" +
-						"<span style='color:	#484848; font-style:italic'>" + data[j]['Followers'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").substring(0, data[j]['Followers'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").length - 2) + " followers </span><br><br>" +
-						data[j]['Descriptions'] + "<br><br>" +
-						"_______________________________________________________<br><br>" +
-						`<div style='font-size:17.5; line-height:40px; font-family:NeueMontreal'><center><i>Prominent Journalists Within Cluster</i></center></div>` +
-						`<span style='font-size:16; color:#202020;line-height:30px'><center>${prominents[algo][cluster_algos[algo]][0]}<br>${prominents[algo][cluster_algos[algo]][1]}<br>${prominents[algo][cluster_algos[algo]][2]}<br><br><span style='font-size:80; color:${hexColors[cluster_algos[algo]]}'>&#9673</span></center></span>`
-					);
+      div.transition().duration(500)
+          .style('opacity', '1.0')
+				var cluster_algos = [data[j]['Gaussian'], data[j]['Spectral'], data[j]['Agglomerative'], data[j]['KMeans']];
+				div.html(
+					"<span style='font-size:32; font-family:NeueMontreal'>" + data[j]['Names'] + "</span> <br>" +
+					"<span style='color:	#484848; font-style:italic'>" + data[j]['Followers'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").substring(0, data[j]['Followers'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",").length - 2) + " followers </span><br><br>" +
+					data[j]['Descriptions'] + "<br><br>" +
+					"_______________________________________________________<br><br>" +
+					`<div style='font-size:17.5; line-height:40px; font-family:NeueMontreal'><center><i>Prominent Journalists Within Cluster</i></center></div>` +
+					`<span style='font-size:16; color:#202020;line-height:30px'><center>${prominents[algo][cluster_algos[algo]][0]}<br>${prominents[algo][cluster_algos[algo]][1]}<br>${prominents[algo][cluster_algos[algo]][2]}<br><br><span style='font-size:80; color:${hexColors[cluster_algos[algo]]}'>&#9673</span></center></span>`
+				);
 
-					canvas.selectAll('circle').filter(function (d) {
-						return d.Names == data[j]['Names'];}).moveToFront();
+				canvas.selectAll('circle').filter(function (d) {
+					return d.Names == data[j]['Names'];}).moveToFront();
 
 
-
-					circle.transition().duration(1000)
-						.filter(function (d) {
-							return d.Names == data[j]['Names'];})
-						.attr('fill', '#5AD75A')
-						.attr("r", function (d) {
-							return 8 * Math.pow(d.Followers,0.1);
-						})
+				// Makes the circle blink and turn green when a user searches for the specific node
+				circle.transition().duration(1000)
+					.filter(function (d) {
+						return d.Names == data[j]['Names'];})
+					.attr('fill', '#5AD75A')
+					.attr("r", function (d) {
+						return 8 * Math.pow(d.Followers,0.1);
+					})
             .transition()
             .duration(800)
             .attr("r", function (d) {
