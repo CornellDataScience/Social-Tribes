@@ -132,10 +132,10 @@ function draw(type){
     svg = d3.select("svg"),
         width = +svg.attr("width"),
         height = +svg.attr("height"),
-        g = svg.append("g").attr("transform", "translate(40,0)");
+        g = svg.append("g").attr("transform", "translate(-40,0), scale(0.5)");
 
     tree = clustertype()
-    .size([height, width - 160]);
+    .size([width - 100, height - 100]);
   } else {
   //RADIAL DENDROGRAM
     svg = d3.select("svg"),

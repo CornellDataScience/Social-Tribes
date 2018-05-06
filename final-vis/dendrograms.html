@@ -30,28 +30,25 @@
 }
 
 </style>
-<h1 class = "centered" > CDS DV - Social Tribes - Dendrograms Visualizations</h1>
+<h1 class = "centered" > CDS DV - Social Tribes - Dendrograms Visualizations</h1><hr><br>
 <div class = "row">
-  <div class = "vis" width = "900">
-  <div class = "card centered">
-    Select a Visualization Method, Click Node to View Details
-    <form class = "centered" name = "selectType">
-      <input type="radio" name="mode" id="tree" checked="true">
-      <label for="tree">Dendrogram</label>
-      <input type="radio" name="mode" id="tidytree">
-      <label for="tidytree">Tidy Dendrogram</label>
-      <input type="radio" name="mode" id="tidyradial">
-      <label for="tidyradial">Radial Dendrogram</label>
-    </form>
-  </div>
-  <br>
-  <svg width="900" height="900"></svg>
-  </div>
-  <div class = "col-md-3 col-md-offset-9">
-    <div class = "card" height = "900">
-      <p id = "infoTop"></p>
-      <p id = "infoBottom"></p>
+  <div class = "vis col-md-7"><svg width="900" height="800"></svg></div>
+  <div class = "col-md-4">
+    <div class = "card centered">
+      <span style = "font-weight:bold;">Select a Visualization Method, Click Node to View Details</span>
+      <form class = "centered" name = "selectType">
+        <input type="radio" name="mode" id="tree" checked="true">
+        <label for="tree">Dendrogram</label>
+        <input type="radio" name="mode" id="tidytree">
+        <label for="tidytree">Tidy Dendrogram</label>
+        <input type="radio" name="mode" id="tidyradial">
+        <label for="tidyradial">Radial Dendrogram</label>
+      </form>
     </div>
+      <div class = "card" height = "750">
+        <p id = "infoTop"></p>
+        <p id = "infoBottom"></p>
+      </div>
   </div>
 </div>
 <script src = "./dendrograms.js"></script>
