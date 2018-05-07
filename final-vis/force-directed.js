@@ -32,8 +32,8 @@ for (var i = 0; i<432; i++){
 }
 
 //tooltip
-var div = d3.select("body").append("div") 
-    .attr("class", "tooltip")       
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
     .style("opacity", 0);
 
 //simulation reset function
@@ -58,7 +58,7 @@ function sim(threshold){
       }
     }
   }
-  
+
   link = link.data(links, function(d) { return d.source.id + "-" + d.target.id; });
   link.exit().remove();
 
@@ -76,11 +76,11 @@ function sim(threshold){
     }
     else if (influential.includes(name)){
       return "red";
-    } else { 
+    } else {
       return "gray";
     }
   });
-  simulation.alpha(1).restart(); 
+  simulation.alpha(1).restart();
 }
 
 //loading data
@@ -98,17 +98,19 @@ d3.text("similarity.csv",function(error,csvdata){
       } else { return "gray";}
     })
     .on("mouseover", function(d) {
-        div.transition()    
-        .duration(250)    
-        .style("opacity", 0.9);      
-        div.html(names[d.num])  
-          .style("left", (d3.event.pageX) + "px")   
-          .style("top", (d3.event.pageY - 28) + "px");  
-        })          
-    .on("mouseout", function(d) {   
-        div.transition()    
-        .duration(250)    
-        .style("opacity", 0); 
+      var matrix = this.getScreenCTM()
+        .translate(+ this.getAttribute("cx"), + this.getAttribute("cy"));
+        div.transition()
+        .duration(250)
+        .style("opacity", 0.9);
+        div.html(names[d.num])
+          .style("left", (window.pageXOffset + matrix.e + 15) + "px")
+          .style("top", (window.pageYOffset + matrix.f - 30) + "px");
+        })
+    .on("mouseout", function(d) {
+        div.transition()
+        .duration(250)
+        .style("opacity", 0);
     })
     .merge(node);
   simulation.nodes(nodes);
