@@ -31,7 +31,14 @@
 }
 
 </style>
-<body>
+
+<script>
+function load(){
+	document.body.style.zoom=(document.documentElement.clientWidth / 1800);
+}
+</script>
+
+<body onload='load()'>
 <h1> CDS DV - Social Tribes - Dendrograms Visualizations</h1><hr><br>
 <div class = "row">
   <div class = "vis col-md-7"><svg width="900" height="800"></svg></div>

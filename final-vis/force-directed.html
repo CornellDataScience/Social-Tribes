@@ -33,10 +33,16 @@
 .autocomplete-suggestions { border: 1px solid #999; background: white; cursor: default; overflow: auto; }
 .autocomplete-suggestion { padding: 10px 5px; white-space: nowrap; overflow: hidden; }
 .autocomplete-selected { background: silver; }
-.autocomplete-suggestions strong { font-weight: normal;}  
+.autocomplete-suggestions strong { font-weight: normal;}
 
 </style>
-<body>
+<script>
+function load(){
+	document.body.style.zoom=(document.documentElement.clientWidth / 2000);
+}
+</script>
+
+<body onload='load()'>
 <div class = "centered">
 <h1> CDS DV - Social Tribes - Force Directed Network Visualization</h1><hr><br>
 </div>

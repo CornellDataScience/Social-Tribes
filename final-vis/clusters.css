@@ -1,8 +1,15 @@
 body {
 	margin:0;
-	padding-top:5vh;
 	font-family: Yantramanav;
 	fill: #6e6e6e;
+}
+
+.center-div
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
 }
 
 svg {

@@ -74,10 +74,15 @@
 	    var popup = document.getElementById("myPopup");
 	    popup.classList.toggle("show");
 	}
+
+	function load(){
+			document.body.style.zoom=(document.documentElement.clientWidth / 1440);
+	}
 	</script>
 
-	<body>
-		<div style='width:1000; float:left'>
+	<body onload='load()'>
+		<div class='center-div'>
+		<div style='width:70vw; float:left'>
 			<div style='font-size: 34; text-align: center; font-family: NeueMontreal; font-weight: 500'>Clustering Of Political Journalists On Twitter</div>
 			<div id='algo' style='color: 	#585858; font-size: 14; text-align: center'>Currently using: Spectral Clustering</div>
 			<center><svg></svg></center>
@@ -107,7 +112,7 @@
 						<button id='Select' style='margin-top:10px; margin-left:5px'>Select</button>
         </div></center>
 		</div>
-
+	</div>
 	</body>
 
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>

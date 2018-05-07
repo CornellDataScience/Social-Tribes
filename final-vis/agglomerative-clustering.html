@@ -8,7 +8,13 @@
 <link href="styles.css" rel="stylesheet">
 </head>
 
-<body>
+<script>
+function load(){
+	document.body.style.zoom=(document.documentElement.clientWidth / 2000);
+}
+</script>
+
+<body onload='load()'>
 <style>
 	.centered {
 	  text-align: center;
@@ -143,7 +149,7 @@ var toggle = document.getElementById('toggle_auto');
 toggle.addEventListener('change', function(a){
 	auto = a.target.checked;
 	if (auto){step_();} else{clearTimeout(step_);}
-	
+
 });
 
 var startbtn = document.getElementById('start');
@@ -165,5 +171,5 @@ stepbtn.addEventListener('click', function(a){
 
 start();
 </script>
-</body>	
+</body>
 </html>
